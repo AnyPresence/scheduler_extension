@@ -7,16 +7,23 @@ require "scheduler_extension/version"
 Gem::Specification.new do |s|
   s.name        = "scheduler_extension"
   s.version     = SchedulerExtension::VERSION
-  s.authors     = ["TODO: Your name"]
-  s.email       = ["TODO: Your email"]
-  s.homepage    = "TODO"
-  s.summary     = "TODO: Summary of SchedulerExtension."
-  s.description = "TODO: Description of SchedulerExtension."
+  s.authors     = ["Anypresence"]
+  s.email       = ["info@anypresence.com"]
+  s.homepage    = "http://www.anypresence.com/"
+  s.summary     = ""
+  s.description = ""
 
   s.files = Dir["{app,config,db,lib}/**/*"] + ["MIT-LICENSE", "Rakefile", "README.rdoc"]
   s.test_files = Dir["test/**/*"]
 
   s.add_dependency "rails", "~> 3.2.9"
+  s.add_dependency "mongoid", "~> 3.0.6"
+  s.add_dependency "local-env"
+  
+  s.add_development_dependency "debugger"
+  s.add_development_dependency "database_cleaner"
+  s.add_development_dependency "factory_girl", "= 3.3.0"
+  s.add_development_dependency "shoulda"
   # s.add_dependency "jquery-rails"
 
 end

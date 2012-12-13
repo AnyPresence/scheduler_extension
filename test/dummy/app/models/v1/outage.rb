@@ -1,4 +1,4 @@
-class Outage
+class V1::Outage
   include Mongoid::Document
   include Mongoid::Timestamps
   include AP::SchedulerExtension::Scheduler
@@ -8,7 +8,7 @@ class Outage
   def save
     super
     Rails.logger.info "Sending scheduler job"
-    scheduler_perform(self, {})
+    #scheduler_perform(self, {})
     true
   end
 end

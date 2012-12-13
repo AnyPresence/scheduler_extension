@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class OutageTest < ActiveSupport::TestCase
+class ::V1::OutageTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end

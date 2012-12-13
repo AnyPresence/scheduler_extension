@@ -10,6 +10,10 @@ require 'database_cleaner'
 
 Rails.backtrace_cleaner.remove_silencers!
 
+Dir.glob(File.dirname(__FILE__) + "/factories/*").each do |factory|
+  require factory
+end
+
 # Load support files
 Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each { |f| require f }
 

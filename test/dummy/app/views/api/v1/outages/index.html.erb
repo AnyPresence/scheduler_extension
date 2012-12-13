@@ -11,8 +11,8 @@
 <% @outages.each do |outage| %>
   <tr>
     <td><%= outage.title %></td>
-    <td><%= link_to 'Show', outage %></td>
-    <td><%= link_to 'Edit', edit_outage_path(outage) %></td>
+    <td><%= link_to 'Show', api_v1_outage_path(outage) %></td>
+    <td><%= link_to 'Edit', edit_api_v1_outage_path(outage) %></td>
     <td><%= link_to 'Destroy', outage, method: :delete, data: { confirm: 'Are you sure?' } %></td>
   </tr>
 <% end %>
@@ -20,4 +20,4 @@
 
 <br />
 
-<%= link_to 'New Outage', new_outage_path %>
+<%= link_to 'New Outage', new_api_v1_outage_path %>

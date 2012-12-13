@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class OutagesControllerTest < ActionController::TestCase
+class Api::V1::OutagesControllerTest < ActionController::TestCase
   
   # This should return the minimal set of attributes required to create a valid
   # Outage. As you add validations to Outage, be sure to
@@ -17,8 +17,8 @@ class OutagesControllerTest < ActionController::TestCase
   end
   
   setup do
-    Outage.any_instance.stubs(:scheduler_perform)
-    @outage = Outage.create! valid_attributes
+    ::V1::Outage.any_instance.stubs(:scheduler_perform)
+    @outage = ::V1::Outage.create! valid_attributes
   end
 
   should "index" do
@@ -37,7 +37,7 @@ class OutagesControllerTest < ActionController::TestCase
       post :create, outage: {  }
     end
 
-    assert_redirected_to outage_path(assigns(:outage))
+    assert_redirected_to api_v1_outage_path(assigns(:outage))
   end
 
   should "show outage" do
@@ -52,7 +52,7 @@ class OutagesControllerTest < ActionController::TestCase
 
   should "update outage" do
     put :update, id: @outage, outage: {  }
-    assert_redirected_to outage_path(assigns(:outage))
+    assert_redirected_to api_v1_outage_path(assigns(:outage))
   end
 
   should "destroy outage" do
@@ -60,6 +60,6 @@ class OutagesControllerTest < ActionController::TestCase
       delete :destroy, id: @outage
     end
 
-    assert_redirected_to outages_path
+    assert_redirected_to api_v1_outages_path
   end
 end

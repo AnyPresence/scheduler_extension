@@ -1,8 +1,9 @@
-class OutagesController < ApplicationController
+class Api::V1::OutagesController < ApplicationController
+
   # GET /outages
   # GET /outages.json
   def index
-    @outages = Outage.all
+    @outages = ::V1::Outage.all
 
     respond_to do |format|
       format.html # index.html.erb
@@ -13,7 +14,7 @@ class OutagesController < ApplicationController
   # GET /outages/1
   # GET /outages/1.json
   def show
-    @outage = Outage.find(params[:id])
+    @outage = ::V1::Outage.find(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb
@@ -24,7 +25,7 @@ class OutagesController < ApplicationController
   # GET /outages/new
   # GET /outages/new.json
   def new
-    @outage = Outage.new
+    @outage = ::V1::Outage.new
 
     respond_to do |format|
       format.html # new.html.erb
@@ -34,13 +35,13 @@ class OutagesController < ApplicationController
 
   # GET /outages/1/edit
   def edit
-    @outage = Outage.find(params[:id])
+    @outage = ::V1::Outage.find(params[:id])
   end
 
   # POST /outages
   # POST /outages.json
   def create
-    @outage = Outage.new(params[:outage])
+    @outage = ::V1::Outage.new(params[:outage])
 
     respond_to do |format|
       if @outage.save
@@ -56,7 +57,7 @@ class OutagesController < ApplicationController
   # PUT /outages/1
   # PUT /outages/1.json
   def update
-    @outage = Outage.find(params[:id])
+    @outage = ::V1::Outage.find(params[:id])
 
     respond_to do |format|
       if @outage.update_attributes(params[:outage])
@@ -72,7 +73,7 @@ class OutagesController < ApplicationController
   # DELETE /outages/1
   # DELETE /outages/1.json
   def destroy
-    @outage = Outage.find(params[:id])
+    @outage = ::V1::Outage.find(params[:id])
     @outage.destroy
 
     respond_to do |format|

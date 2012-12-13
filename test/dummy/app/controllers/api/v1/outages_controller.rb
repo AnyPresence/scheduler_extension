@@ -1,4 +1,5 @@
 class Api::V1::OutagesController < ApplicationController
+  respond_to :json
 
   # GET /outages
   # GET /outages.json
@@ -45,10 +46,10 @@ class Api::V1::OutagesController < ApplicationController
 
     respond_to do |format|
       if @outage.save
-        format.html { redirect_to @outage, notice: 'Outage was successfully created.' }
-        format.json { render json: @outage, status: :created, location: @outage }
+        #format.html { redirect_to @outage, notice: 'Outage was successfully created.' }
+        format.json { render json: @outage, status: :created, location: api_v1_outages_path(@outage) }
       else
-        format.html { render action: "new" }
+        #format.html { render action: "new" }
         format.json { render json: @outage.errors, status: :unprocessable_entity }
       end
     end
@@ -61,10 +62,10 @@ class Api::V1::OutagesController < ApplicationController
 
     respond_to do |format|
       if @outage.update_attributes(params[:outage])
-        format.html { redirect_to @outage, notice: 'Outage was successfully updated.' }
+        #format.html { redirect_to @outage, notice: 'Outage was successfully updated.' }
         format.json { head :no_content }
       else
-        format.html { render action: "edit" }
+        #format.html { render action: "edit" }
         format.json { render json: @outage.errors, status: :unprocessable_entity }
       end
     end
@@ -77,7 +78,7 @@ class Api::V1::OutagesController < ApplicationController
     @outage.destroy
 
     respond_to do |format|
-      format.html { redirect_to outages_url }
+      format.html { redirect_to api_v1_outages_url }
       format.json { head :no_content }
     end
   end

@@ -5,6 +5,6 @@ Rails.application.routes.draw do
     end
   end
 
-
   mount SchedulerExtension::Engine => "/scheduler_extension"
+  
 end

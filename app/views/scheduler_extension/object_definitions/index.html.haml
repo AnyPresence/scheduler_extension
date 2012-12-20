@@ -19,7 +19,9 @@
         %tr
           %td= object.name
           %td= object.query_scope
-          %td= object.extensions.to_sentence
+          %td
+            -  object.extensions.each do |ext|
+              = link_to ext.name.to_s, edit_object_definition_extension_path(object, ext)
           %td
             = link_to "Edit", edit_object_definition_path(object)
             = link_to "Delete", object, method: :delete, data: { confirm: 'Are you sure?' } 

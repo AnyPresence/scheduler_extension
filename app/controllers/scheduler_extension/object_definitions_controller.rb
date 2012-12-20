@@ -4,6 +4,7 @@ module SchedulerExtension
   class ObjectDefinitionsController < ApplicationController
     before_filter :get_main_app_models, only: [:index, :update]
     before_filter :get_available_extensions, only: [:edit, :new]
+
     
     def index
       @object_definitions = ::SchedulerExtension::ObjectDefinition.all
@@ -18,13 +19,20 @@ module SchedulerExtension
     end
     
     def new
-      @object_definition = ::SchedulerExtension::ObjectDefinition.new
+      @object_definition = ::SchedulerExtension::ObjectDefinition.new      
       @object_definition.name = params[:name] || ""
     end
     
     def update
       @object_definition = ::SchedulerExtension::ObjectDefinition.find(params[:id])
-
+      params[:object_definition][:extensions] ||= []
+      params[:object_definition][:configured_extensions_step] ||= ""
+      
+      extensions = params[:object_definition][:extensions]
+      # extensions.each do |ext|
+      #   @object_definition.extensions << ::SchedulerExtension::Extension.new(name: ext.name)
+      # end 
+      
       respond_to do |format|
         if @object_definition.update_attributes(params[:object_definition])
           format.html { redirect_to @object_definition, notice: 'Successfully updated.' }
@@ -37,10 +45,19 @@ module SchedulerExtension
     end
     
     def create
-      @object_definition = ::SchedulerExtension::ObjectDefinition.new(params[:object_definition])
-
+      @object_definition = ::SchedulerExtension::ObjectDefinition.new(params[:object_definition].except(:extensions))
+      debugger
+      if !params[:object_definition][:extensions].blank?
+        params[:object_definition][:extensions].each do |ext|
+          @object_definition.extensions << ::SchedulerExtension::Extension.new(name: ext[:name])
+        end
+      end
+      
       respond_to do |format|
         if @object_definition.save
+          
+
+          
           format.html { redirect_to @object_definition, notice: 'Successfully created.' }
           format.json { render json: @object_definition, status: :created, location: @object_definition }
         else
@@ -74,8 +91,15 @@ module SchedulerExtension
     end
     
     def get_available_extensions
-      @available_extensions = ::AP.constants.map { |m| m.to_s if (!m.empty? && m != :SchedulerExtension) }.compact
+      @available_extensions = ::AP.constants.map do |m| 
+        if (!m.empty? && m != :SchedulerExtension)
+          ext = ::SchedulerExtension::Extension.new(name: m.to_s)
+        end 
+      end
+      @available_extensions = @available_extensions.compact
     end
+    
+
     
   end
 end

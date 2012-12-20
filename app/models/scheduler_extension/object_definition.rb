@@ -8,8 +8,10 @@ module SchedulerExtension
     
     field :name, type: String
     field :query_scope, type: String
-    field :extensions, type: Array, default: []
-        
+    has_many :extensions, class_name: "::SchedulerExtension::Extension"
+    
+    accepts_nested_attributes_for :extensions, class_name: "::SchedulerExtension::Extension"
+    
     scope :has_name, ->(n) { where(:name => n) }
     
     def self.manually_execute_tasks(object_definitions)
@@ -32,7 +34,11 @@ module SchedulerExtension
         objects.each do |object_to_queue|
           extensions.each do |extension|
             next if extension.blank?
-            Resque.enqueue("LifecycleTriggered#{extension}".constantize, {"object_instance_id" => object_to_queue.id, "klass_name" => object_to_queue.class.name, "options" => {} })
+            options = {}
+            extension.extension_configurations.each do |config|
+              options[config.name.to_sym] = config.value
+            end
+            Resque.enqueue("LifecycleTriggered#{extension}".constantize, {"object_instance_id" => object_to_queue.id, "klass_name" => object_to_queue.class.name, "options" => options })
           end
         end
       end 

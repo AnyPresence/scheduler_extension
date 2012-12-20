@@ -8,4 +8,4 @@
     %tr
       %td= @object_definition.name
       %td= @object_definition.query_scope
-      %td= @object_definition.extensions.to_sentence
+      %td= @object_definition.extensions.map { |m| m.name }.to_sentence unless @object_definition.extensions.blank?

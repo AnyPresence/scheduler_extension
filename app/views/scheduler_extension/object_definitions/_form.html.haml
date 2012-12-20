@@ -1,9 +1,11 @@
 = simple_form_for(@object_definition) do |f|
   = f.error :base
   = f.error_notification
-  = f.input :name, :disabled => true
+  = f.input :name, :readonly => true
   = f.input :query_scope
   - if !@available_extensions.blank?
-    = f.input :extensions, :collection => @available_extensions, :as => :check_boxes
+    - @available_extensions.each do |ext|
+      = f.label ext.name
+      = check_box_tag 'object_definition[extensions][][name]', ext.name, @object_definition.extensions.map{|m| m.name}.include?(ext.name)
   %br
-  = f.submit
+  = f.button :submit

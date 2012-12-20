@@ -30,7 +30,7 @@ module AP
       # Creates jobs for various other extensions (e.g. sms, push)
       def self.scheduler_perform(options={})
         interval = Config.instance.configuration[:interval]
-        Rails.logger.info "Fired scheduler job. Config: #{@@config.inspect}"
+        Rails.logger.info "Fired scheduler job. Config: #{Config.instance.configuration.inspect}"
         options = HashWithIndifferentAccess.new(options)
         
         # Objects 

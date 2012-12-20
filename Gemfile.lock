@@ -1,3 +1,16 @@
+GIT
+  remote: git://github.com/AnyPresence/push_notification_extension.git
+  revision: ff55cb10ec392f52af8fa262de7e73f979f12b98
+  tag: v0.0.1
+  specs:
+    push_notification_extension (0.0.1)
+      gcm (= 0.0.2)
+      json
+      liquid
+      mongoid (~> 3.0.6)
+      multi_json
+      rails (~> 3.2.8)
+
 PATH
   remote: .
   specs:
@@ -69,8 +82,14 @@ GEM
     factory_girl (3.3.0)
       activesupport (>= 3.0.0)
     fssm (0.2.9)
+    gcm (0.0.2)
+      httparty
+      json
     haml (3.1.7)
     hike (1.2.1)
+    httparty (0.9.0)
+      multi_json (~> 1.0)
+      multi_xml
     i18n (0.6.1)
     journey (1.0.4)
     jquery-rails (2.1.4)
@@ -79,6 +98,7 @@ GEM
     jquery_mobile_rails (1.2.0)
       rails (>= 3.1.0)
     json (1.7.5)
+    liquid (2.4.1)
     local-env (0.0.1)
     mail (2.4.4)
       i18n (>= 0.4.0)
@@ -95,6 +115,7 @@ GEM
       tzinfo (~> 0.3.22)
     moped (1.3.1)
     multi_json (1.4.0)
+    multi_xml (0.5.1)
     origin (1.0.11)
     polyglot (0.3.3)
     rack (1.4.1)
@@ -178,6 +199,7 @@ DEPENDENCIES
   jquery_mobile_rails (= 1.2.0)
   mocha (~> 0.12.3)
   mongoid (~> 3.0.6)
+  push_notification_extension (= 0.0.1)!
   redis
   resque
   sass-rails (= 3.2.5)

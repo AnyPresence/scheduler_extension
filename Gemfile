@@ -16,6 +16,7 @@ gem 'jquery_mobile_rails', '1.2.0'
 gem 'simple_form', '2.0.4'
 gem 'sass-rails', '3.2.5'
 gem 'compass-rails', '1.0.3'
+gem 'push_notification_extension', '0.0.1', :git => 'git://github.com/AnyPresence/push_notification_extension.git', :tag => "v0.0.1"
 
 # Declare any dependencies that are still in development here instead of in
 # your gemspec. These might include edge Rails or gems from your path or

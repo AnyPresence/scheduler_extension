@@ -3,29 +3,31 @@
 = csrf_meta_tags
 
 %h1 Objects
-%table
-  %tbody
-    %tr 
-      %th name
-      %th query_scope
-      %th extensions
-      %th actions
-    - @object_definitions.each do |object|
-      %tr
-        %td= object.name
-        %td= object.query_scope
-        %td= object.extensions.to_sentence
-        %td
-          = link_to "Edit"
-          = link_to "Delete"
+%h1 Interval #{::AP::SchedulerExtension::Scheduler::Config.instance.configuration[:interval]} seconds
+
+.container
+  = link_to "Trigger tasks", manually_execute_tasks_path, method: :post
+
+  %table
+    %tbody
+      %tr 
+        %th name
+        %th query_scope
+        %th extensions
+        %th actions
+      - @object_definitions.each do |object|
+        %tr
+          %td= object.name
+          %td= object.query_scope
+          %td= object.extensions.to_sentence
+          %td
+            = link_to "Edit", edit_object_definition_path(object)
+            = link_to "Delete", object, method: :delete, data: { confirm: 'Are you sure?' } 
           
-= @available_object_definitions.count
-
-
-%br
-- @available_object_definitions.each do |object|
-  - if @object_definitions.has_name(object.to_s).empty?
-    = link_to "Add #{object}", new_object_definition_path
+  %br
+  - @available_object_definitions.each do |object|
+    - if @object_definitions.has_name(object.to_s).empty?
+      = link_to "Add #{object}", new_object_definition_path(name: object)
 
 
 

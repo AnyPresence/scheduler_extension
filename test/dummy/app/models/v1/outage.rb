@@ -2,6 +2,7 @@ class V1::Outage
   include Mongoid::Document
   include Mongoid::Timestamps
   include AP::SchedulerExtension::Scheduler
+  include AP::PushNotificationExtension::PushNotification
   
   field :"title", type: String
   

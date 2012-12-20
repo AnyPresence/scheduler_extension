@@ -1,0 +1,11 @@
+%h1 Settings for object
+%table
+  %tbody
+    %tr 
+      %th name
+      %th query_scope
+      %th extensions
+    %tr
+      %td= @object_definition.name
+      %td= @object_definition.query_scope
+      %td= @object_definition.extensions.to_sentence

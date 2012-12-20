@@ -1,0 +1,9 @@
+= simple_form_for(@object_definition) do |f|
+  = f.error :base
+  = f.error_notification
+  = f.input :name, :disabled => true
+  = f.input :query_scope
+  - if !@available_extensions.blank?
+    = f.input :extensions, :collection => @available_extensions, :as => :check_boxes
+  %br
+  = f.submit

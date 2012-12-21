@@ -34,7 +34,15 @@ module SchedulerExtension
       # end 
       
       respond_to do |format|
-        if @object_definition.update_attributes(params[:object_definition])
+        if @object_definition.update_attributes(params[:object_definition].except(:extensions))
+          if !params[:object_definition][:extensions].blank?
+            params[:object_definition][:extensions].each do |ext|
+              if @object_definition.extensions.where(name: ext[:name]).empty?
+                @object_definition.extensions << ::SchedulerExtension::Extension.new(name: ext[:name])
+              end
+            end
+          end
+          
           format.html { redirect_to @object_definition, notice: 'Successfully updated.' }
           format.json { head :no_content }
         else
@@ -46,7 +54,7 @@ module SchedulerExtension
     
     def create
       @object_definition = ::SchedulerExtension::ObjectDefinition.new(params[:object_definition].except(:extensions))
-      debugger
+
       if !params[:object_definition][:extensions].blank?
         params[:object_definition][:extensions].each do |ext|
           @object_definition.extensions << ::SchedulerExtension::Extension.new(name: ext[:name])
@@ -55,9 +63,7 @@ module SchedulerExtension
       
       respond_to do |format|
         if @object_definition.save
-          
-
-          
+        
           format.html { redirect_to @object_definition, notice: 'Successfully created.' }
           format.json { render json: @object_definition, status: :created, location: @object_definition }
         else

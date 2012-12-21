@@ -9,9 +9,13 @@ module SchedulerExtension
       @extension = @object_definition.extensions.find(params[:id])
       
       if @extension.extension_configurations.blank?
-        @extension_json["model_configuration"]["object_definition_level_configuration"].keys.each do |object_level_config|
-          ext_config = ::SchedulerExtension::ExtensionConfiguration.new(name: object_level_config)
-          @extension.extension_configurations << ext_config
+        if !@extension_json.blank?
+          @extension_json["model_configuration"]["object_definition_level_configuration"].keys.each do |object_level_config|
+            ext_config = ::SchedulerExtension::ExtensionConfiguration.new(name: object_level_config)
+            @extension.extension_configurations << ext_config
+          end
+        else
+          Rails.logger.error "Unable to configure extension. No json configuration information available."
         end
       end
     end

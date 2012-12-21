@@ -18,6 +18,7 @@ module SchedulerExtension
       # For each object, get all the objects using its query scope and place it into 
       # a queue
       latest_version = ::AP::SchedulerExtension::Scheduler::Config.instance.latest_version
+      Rails.logger.info "Running tasks for #{object_definitions.count} objects."
       object_definitions.each do |object|
         query_scope = object.query_scope
         extensions = object.extensions
@@ -38,7 +39,7 @@ module SchedulerExtension
             extension.extension_configurations.each do |config|
               options[config.name.to_sym] = config.value
             end
-            Resque.enqueue("LifecycleTriggered#{extension}".constantize, {"object_instance_id" => object_to_queue.id, "klass_name" => object_to_queue.class.name, "options" => options })
+            Resque.enqueue("LifecycleTriggered#{extension.name}".constantize, {"object_instance_id" => object_to_queue.id, "klass_name" => object_to_queue.class.name, "options" => options })
           end
         end
       end 

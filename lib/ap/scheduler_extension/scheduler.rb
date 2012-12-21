@@ -3,7 +3,6 @@ require 'singleton'
 module AP
   module SchedulerExtension
     module Scheduler
-      @@job_unit = nil
       @@latest_version = nil
       
       # Creates the account.
@@ -15,39 +14,52 @@ module AP
         
         # Start scheduler task with current time + interval
         interval = self.interval
-        add_to_queue(Time.now + interval)
+   
+        future_time = Time.now + interval
+        
+        add_to_queue(future_time)
       end
       
-      def self.add_to_queue(future_time=Time.now)
-        ::Resque.enqueue(::LifecycleTriggeredSchedulerExtension, Config.instance.configuration)
+      def self.expired?(future_time)
+        future_time = future_time.is_a?(Time) ? future_time : Time.parse(future_time)
+        (Time.now - future_time).to_i > 0
       end
       
-      def self.job
-        interval = self.interval
-        Config.instance.job_unit ||= ::SchedulerExtension::JobUnit.new(Time.now + interval)
+      def self.add_to_queue(future_time=Time.now+interval)
+        if expired?(future_time)
+           future_time = Time.now + interval 
+        end
+        
+        # For testing purposes for now.
+        sleep 5
+        
+        Resque.remove_queue("scheduler_extension")
+        ::Resque.enqueue(::LifecycleTriggeredSchedulerExtension, future_time.to_s)
       end
       
       # Creates jobs for various other extensions (e.g. sms, push)
-      def self.scheduler_perform(options={})
-        interval = Config.instance.configuration[:interval]
-        Rails.logger.info "Fired scheduler job. Config: #{Config.instance.configuration.inspect}"
-        options = HashWithIndifferentAccess.new(options)
-        
-        # Objects 
-        options[:data].each do |data|
-          ::Resque.enqueue(::SchedulerExtension::TriggeredScheduler, data[:object_klazz], data[:query_scope], data[:query_params], data[:extension_method_name], data[:options_for_extension])
+      def self.scheduler_perform(future_time=nil)
+        if expired?(future_time)
+          ::Resque.enqueue(::SchedulerExtension::QueryObjectsWorker, nil, future_time)
+        else
+          # For testing purposes for now.
+          sleep 1
+          ::Resque.enqueue(::SchedulerExtension::QueryObjectsWorker, nil, future_time)
         end
-
+      end
+      
+      def self.query_objects
+        ::SchedulerExtension::ObjectDefinition.manually_execute_tasks(::SchedulerExtension::ObjectDefinition.all)
       end
       
       def self.interval
-        Config.instance.configuration[:interval].blank? ? 0 : Config.instance.configuration[:interval].to_i
+        Config.instance.configuration[:interval].blank? ? 60 : Config.instance.configuration[:interval].to_i
       end
       
       class Config
         include Singleton
         
-        attr_accessor :latest_version, :configuration, :job_unit
+        attr_accessor :latest_version, :configuration
       end
       
     end

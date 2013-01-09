@@ -1,6 +1,3 @@
-#options = {}
-# Start the timer thread
-#Resque.enqueue(LifecycleTriggeredSchedulerExtension, {:interval => "20"})
 
 begin
   ::AP::SchedulerExtension::Scheduler::config_account({:interval => 5})

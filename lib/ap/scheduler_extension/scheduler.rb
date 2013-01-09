@@ -34,11 +34,13 @@ module AP
         sleep 5
         
         Resque.remove_queue("scheduler_extension")
-        ::Resque.enqueue(::LifecycleTriggeredSchedulerExtension, future_time.to_s)
+        ::Resque.enqueue(::LifecycleTriggeredSchedulerExtension, {options: {future_time: future_time.to_s}})
       end
       
       # Creates jobs for various other extensions (e.g. sms, push)
-      def self.scheduler_perform(future_time=nil)
+      def self.scheduler_perform(object_instance, options={})
+        options = HashWithIndifferentAccess.new(options)
+        future_time = options[:future_time]
         if expired?(future_time)
           ::Resque.enqueue(::SchedulerExtension::QueryObjectsWorker, nil, future_time)
         else

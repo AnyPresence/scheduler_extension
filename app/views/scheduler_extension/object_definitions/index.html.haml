@@ -1,11 +1,11 @@
-= stylesheet_link_tag 'admin'
-= javascript_include_tag 'admin'
-= csrf_meta_tags
 
 %h1 Objects
 %h1 Interval #{::AP::SchedulerExtension::Scheduler::Config.instance.configuration[:interval]} seconds
 
 .container
+  .notice
+    = flash[:notice]
+  
   = link_to "Trigger tasks", manually_execute_tasks_path, method: :post
 
   %table

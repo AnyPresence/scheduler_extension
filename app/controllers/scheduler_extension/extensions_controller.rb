@@ -25,7 +25,7 @@ module SchedulerExtension
       @extension = @object_definition.extensions.find(params[:id])
       
       if @extension.update_attributes(params[:extension])
-        redirect_to settings_path
+        redirect_to object_definitions_path
       else
         render 'edit'
       end

@@ -23,6 +23,16 @@ module SchedulerExtension
       @object_definition.name = params[:name] || ""
     end
     
+    def destroy
+      @object_definition = ::SchedulerExtension::ObjectDefinition.find(params[:id])      
+      @object_definition.destroy
+
+      respond_to do |format|
+        format.html { redirect_to object_definitions_url }
+        format.json { head :no_content }
+      end
+    end
+    
     def update
       @object_definition = ::SchedulerExtension::ObjectDefinition.find(params[:id])
       params[:object_definition][:extensions] ||= []
@@ -64,7 +74,7 @@ module SchedulerExtension
       respond_to do |format|
         if @object_definition.save
         
-          format.html { redirect_to @object_definition, notice: 'Successfully created.' }
+          format.html { redirect_to object_definitions_url, notice: 'Successfully created. Configure extensions by selecting them.' }
           format.json { render json: @object_definition, status: :created, location: @object_definition }
         else
           format.html { render action: "new" }
@@ -75,9 +85,6 @@ module SchedulerExtension
     
     def manually_execute_tasks
       @object_definitions = ::SchedulerExtension::ObjectDefinition.all
-      
-      job = ::AP::SchedulerExtension::Scheduler.job
-      Rails.logger.info "Job will expire at: #{job.future_time_to_run}"
 
       ::SchedulerExtension::ObjectDefinition.manually_execute_tasks(@object_definitions)
     end

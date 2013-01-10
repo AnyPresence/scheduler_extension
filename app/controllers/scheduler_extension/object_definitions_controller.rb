@@ -86,7 +86,7 @@ module SchedulerExtension
     def manually_execute_tasks
       @object_definitions = ::SchedulerExtension::ObjectDefinition.all
 
-      ::SchedulerExtension::ObjectDefinition.manually_execute_tasks(@object_definitions)
+      @count = ::SchedulerExtension::ObjectDefinition.manually_execute_tasks(@object_definitions)
     end
     
   protected

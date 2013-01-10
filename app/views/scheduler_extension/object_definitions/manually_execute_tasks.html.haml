@@ -1,1 +1,7 @@
 %h1 Result of manual execution
+= link_to "Back to objects", object_definitions_path
+%br
+%p #{@count} to process for extensions: 
+- @object_definitions.each do |object|
+  - object.extensions.each do |extension|
+    %p= extension.name.underscore

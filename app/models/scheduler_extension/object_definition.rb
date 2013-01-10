@@ -19,6 +19,7 @@ module SchedulerExtension
       # a queue
       latest_version = ::AP::SchedulerExtension::Scheduler::Config.instance.latest_version
       Rails.logger.info "Running tasks for #{object_definitions.count} objects."
+      count = 0
       object_definitions.each do |object|
         query_scope = object.query_scope
         extensions = object.extensions
@@ -32,17 +33,19 @@ module SchedulerExtension
         Rails.logger.info("Will execute tasks for #{objects.count} #{klazz.to_s} objects")
         
         # Place objects into their respective queues
+        count += objects.count
         objects.each do |object_to_queue|
           extensions.each do |extension|
             next if extension.blank?
             options = {}
             extension.extension_configurations.each do |config|
-              options[config.name.to_sym] = config.value
+              options[config.name.to_sym] = Liquid::Template.parse(config.value).render(object_to_queue.attributes)
             end
             Resque.enqueue("LifecycleTriggered#{extension.name}".constantize, {"object_instance_id" => object_to_queue.id, "klass_name" => object_to_queue.class.name, "options" => options })
           end
         end
       end 
+      count
     end
   end
 end

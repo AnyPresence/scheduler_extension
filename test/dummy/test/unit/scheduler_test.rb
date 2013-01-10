@@ -3,26 +3,25 @@ require 'test_helper'
 class SchedulerTest < ActiveSupport::TestCase
   
   should "schedule with expired job" do
-    mock_job = mock('job')
-    mock_job.expects(:expired?).returns(true)
-    AP::SchedulerExtension::Scheduler.expects(:job).returns(mock_job)
-    options = HashWithIndifferentAccess.new({ interval:  "20", data: [{object_klazz: "Outage"}] })
-    AP::SchedulerExtension::Scheduler.expects(:scheduler_perform).with(equals(options))
-    
-    Resque.enqueue(LifecycleTriggeredSchedulerExtension, options)
+    future_time = Time.now + 30 
+    AP::SchedulerExtension::Scheduler.expects(:query_objects)
+    AP::SchedulerExtension::Scheduler.stubs(:expired?).returns(true)
+    AP::SchedulerExtension::Scheduler.stubs(:add_to_queue)
+    Resque.enqueue(LifecycleTriggeredSchedulerExtension, {options: {future_time: future_time.to_s}})
   end
   
   should "not schedule with non expired job" do
-    mock_job = mock('job')
-    mock_job.expects(:expired?).returns(false)
-    AP::SchedulerExtension::Scheduler.expects(:job).returns(mock_job)
-    Resque.enqueue(LifecycleTriggeredSchedulerExtension, {interval: "20", data: [{object_klazz: "Outage"}]})
+    future_time = Time.now + 30 
+    ::AP::SchedulerExtension::Scheduler.expects(:add_to_queue).once
+    ::AP::SchedulerExtension::Scheduler.stubs(:expired?).returns(false)
+    Resque.enqueue(LifecycleTriggeredSchedulerExtension, {options: {future_time: future_time.to_s}})
   end
   
   should "perform scheduled task" do
-    #SchedulerExtension::TriggeredScheduler.expects(:perform)
-    options = HashWithIndifferentAccess.new({ interval:  "20", data: [{object_klazz: "Outage"}] })
-    AP::SchedulerExtension::Scheduler.scheduler_perform(options)
+    future_time = Time.now + 30 
+    options = HashWithIndifferentAccess.new({future_time: future_time})
+    Resque.stubs(:enqueue).with(::SchedulerExtension::QueryObjectsWorker, anything(), anything());
+    AP::SchedulerExtension::Scheduler.scheduler_perform(nil, options)
   end
   
 end

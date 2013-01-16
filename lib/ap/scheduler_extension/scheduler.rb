@@ -30,9 +30,6 @@ module AP
            future_time = Time.now + interval 
         end
         
-        # For testing purposes for now.
-        sleep 5
-        
         Resque.remove_queue("scheduler_extension")
         ::Resque.enqueue(::LifecycleTriggeredSchedulerExtension, {options: {future_time: future_time.to_s}})
       end
@@ -41,13 +38,9 @@ module AP
       def self.scheduler_perform(object_instance, options={})
         options = HashWithIndifferentAccess.new(options)
         future_time = options[:future_time]
-        if expired?(future_time)
-          ::Resque.enqueue(::SchedulerExtension::QueryObjectsWorker, nil, future_time)
-        else
-          # For testing purposes for now.
-          sleep 1
-          ::Resque.enqueue(::SchedulerExtension::QueryObjectsWorker, nil, future_time)
-        end
+
+        ::Resque.enqueue(::SchedulerExtension::QueryObjectsWorker, nil, future_time)
+        
       end
       
       def self.query_objects

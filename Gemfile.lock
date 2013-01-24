@@ -14,7 +14,7 @@ GIT
 PATH
   remote: .
   specs:
-    scheduler_extension (0.0.1)
+    scheduler_extension (0.0.2)
       local-env
       mongoid (~> 3.0.6)
       rails (~> 3.2.9)

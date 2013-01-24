@@ -36,22 +36,27 @@ module SchedulerExtension
     def update
       @object_definition = ::SchedulerExtension::ObjectDefinition.find(params[:id])
       params[:object_definition][:extensions] ||= []
-      params[:object_definition][:configured_extensions_step] ||= ""
       
       extensions = params[:object_definition][:extensions]
-      # extensions.each do |ext|
-      #   @object_definition.extensions << ::SchedulerExtension::Extension.new(name: ext.name)
-      # end 
       
       respond_to do |format|
         if @object_definition.update_attributes(params[:object_definition].except(:extensions))
-          if !params[:object_definition][:extensions].blank?
-            params[:object_definition][:extensions].each do |ext|
+          if !extensions.blank?
+            extensions.each do |ext|
               if @object_definition.extensions.where(name: ext[:name]).empty?
                 @object_definition.extensions << ::SchedulerExtension::Extension.new(name: ext[:name])
               end
             end
           end
+          
+          extension_names = extensions.map {|m| m[:name]}
+          disabled_extensions = []
+          @object_definition.extensions.each do |ext|
+            if !extension_names.include?(ext.name)
+              disabled_extensions << ext.id
+            end
+          end
+          disabled_extensions.each {|m| ::SchedulerExtension::Extension.find(m).delete }
           
           format.html { redirect_to @object_definition, notice: 'Successfully updated.' }
           format.json { head :no_content }

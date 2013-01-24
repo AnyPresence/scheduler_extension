@@ -38,9 +38,12 @@ module AP
       def self.scheduler_perform(object_instance, options={})
         options = HashWithIndifferentAccess.new(options)
         future_time = options[:future_time]
-
-        ::Resque.enqueue(::SchedulerExtension::QueryObjectsWorker, nil, future_time)
         
+        if !Config.instance.configuration[:disabled]
+          ::Resque.enqueue(::SchedulerExtension::QueryObjectsWorker, nil, future_time)
+        else
+          Rails.logger.info "The extension has been disabled..."
+        end
       end
       
       def self.query_objects

@@ -2,11 +2,13 @@
 %h1 Objects
 %h1 Interval #{::AP::SchedulerExtension::Scheduler::Config.instance.configuration[:interval]} seconds
 
-.container
+- if !flash[:notice].blank?
   .notice
     = flash[:notice]
-  
-  = link_to "Trigger tasks", manually_execute_tasks_path, method: :post
+    
+.container
+  %br
+  = link_to "Trigger jobs now", manually_execute_tasks_path, method: :post
 
   %table
     %tbody

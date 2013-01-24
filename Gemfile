@@ -18,6 +18,11 @@ gem 'sass-rails', '3.2.5'
 gem 'compass-rails', '1.0.3'
 gem 'push_notification_extension', '0.0.1', :git => 'git://github.com/AnyPresence/push_notification_extension.git', :tag => "v0.0.1"
 
+group :assets do
+  gem 'therubyracer'
+  gem 'uglifier'
+end
+
 # Declare any dependencies that are still in development here instead of in
 # your gemspec. These might include edge Rails or gems from your path or
 # Git. Remember to move these dependencies to your gemspec before releasing

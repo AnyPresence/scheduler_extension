@@ -16,8 +16,11 @@ module AP
         interval = self.interval
    
         future_time = Time.now + interval
-        
-        add_to_queue(future_time)
+        if !Config.instance.configuration[:disabled]
+          add_to_queue(future_time)
+        else
+          Rails.logger.info "The extension has been disabled..."
+        end
       end
       
       def self.expired?(future_time)
@@ -27,7 +30,8 @@ module AP
       
       def self.add_to_queue(future_time=Time.now+interval)
         if expired?(future_time)
-           future_time = Time.now + interval 
+           future_time = Time.now + interval
+           Rails.logger.info "Next time to expire is: #{future_time.to_s}"
         end
         
         Resque.remove_queue("scheduler_extension")
@@ -41,8 +45,6 @@ module AP
         
         if !Config.instance.configuration[:disabled]
           ::Resque.enqueue(::SchedulerExtension::QueryObjectsWorker, nil, future_time)
-        else
-          Rails.logger.info "The extension has been disabled..."
         end
       end
       

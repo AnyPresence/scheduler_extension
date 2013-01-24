@@ -4,9 +4,9 @@ class ::SchedulerExtension::QueryObjectsWorker
   def self.perform(klass_data, future_time=nil)  
     if ::AP::SchedulerExtension::Scheduler.expired?(future_time)
        ::AP::SchedulerExtension::Scheduler.query_objects
-       Rails.logger.debug "Time has expired!"
+       Rails.logger.info "Time has expired!"
     else
-      Rails.logger.debug "Time has not expired!"
+      Rails.logger.debug "Time has not yet expired!"
     end
     
     # Place timer back in lifecycle_triggered_scheduler_extension queue with a future time.

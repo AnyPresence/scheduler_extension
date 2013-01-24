@@ -9,6 +9,7 @@ test/dummy/db/migrate/*
 tmp/*
 db/*.sqlite3
 public/system/*
+test/dummy/public/assets/
 coverage/
 config/heroku.yml
 config/local-env.yml

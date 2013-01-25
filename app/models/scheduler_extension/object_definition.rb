@@ -49,6 +49,7 @@ module SchedulerExtension
             extension.extension_configurations.each do |config|
               options[config.name.to_sym] = Liquid::Template.parse(config.value).render(object_to_queue.attributes)
             end
+            Rails.logger.info "Queuing up LifecycleTriggered#{extension.name}: #{options.inspect}"
             Resque.enqueue("LifecycleTriggered#{extension.name}".constantize, {"object_instance_id" => object_to_queue.id, "klass_name" => object_to_queue.class.name, "options" => options })
           end
         end

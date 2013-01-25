@@ -58,7 +58,7 @@ module SchedulerExtension
           end
           disabled_extensions.each {|m| ::SchedulerExtension::Extension.find(m).delete }
           
-          format.html { redirect_to @object_definition, notice: 'Successfully updated.' }
+          format.html { redirect_to object_definitions_url, notice: 'Successfully created. Configure extensions by selecting them.' }
           format.json { head :no_content }
         else
           format.html { render action: "edit" }

@@ -12,4 +12,5 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require scheduler_extension/bootstrap
 //= require_tree .

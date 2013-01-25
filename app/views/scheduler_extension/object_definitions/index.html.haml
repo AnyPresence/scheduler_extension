@@ -5,8 +5,7 @@
 - if !flash[:notice].blank?
   .notice
     = flash[:notice]
-    
-.container
+.container  
   %br
   = link_to "Trigger jobs now", manually_execute_tasks_path, method: :post
 
@@ -17,7 +16,7 @@
         %th name
         %th query_scope
         %th extensions
-        %th actions
+        %th{colspan: '2'} actions
       - @object_definitions.each do |object|
         %tr
           %td= object.active || false
@@ -27,9 +26,10 @@
             -  object.extensions.each do |ext|
               = link_to ext.name.to_s, edit_object_definition_extension_path(object, ext)
           %td
-            = link_to "Edit", edit_object_definition_path(object)
-            = link_to "Delete", object, method: :delete, data: { confirm: 'Are you sure?' } 
-          
+            = link_to "Edit", edit_object_definition_path(object)         
+          %td
+            = link_to "Delete", object, method: :delete, data: { confirm: 'Are you sure?' }
+        
   %br
   - @available_object_definitions.each do |object|
     - if @object_definitions.has_name(object.to_s).empty?

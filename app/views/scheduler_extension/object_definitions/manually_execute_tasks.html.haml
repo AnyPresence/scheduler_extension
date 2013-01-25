@@ -1,11 +1,13 @@
 %h1 Result of manual execution
 = link_to "Back to objects", object_definitions_path
-%br
-%p #{@count || 0} to process for extensions: 
-- @object_definitions.each do |object|
-  - if !object.active
-    %p #{object.name.to_s} is disabled
-  - else
-    %p #{object.name.to_s} is enabled
-  - object.extensions.each do |extension|
-    %p= extension.name.underscore
+
+.container    
+  %br
+  %p #{@count || 0} to process for extensions: 
+  - @object_definitions.each do |object|
+    - if !object.active
+      %p #{object.name.to_s} is disabled
+    - else
+      %p #{object.name.to_s} is enabled
+    - object.extensions.each do |extension|
+      %p= extension.name.underscore

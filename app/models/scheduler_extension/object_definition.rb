@@ -8,6 +8,8 @@ module SchedulerExtension
     
     field :name, type: String
     field :query_scope, type: String
+    field :active, type: Boolean, default: true
+    
     has_many :extensions, class_name: "::SchedulerExtension::Extension"
     
     accepts_nested_attributes_for :extensions, class_name: "::SchedulerExtension::Extension"
@@ -25,6 +27,12 @@ module SchedulerExtension
         extensions = object.extensions
         
         klazz = "::#{latest_version.upcase}::#{object.name}".constantize
+        
+        if !object.active
+          Rails.logger.info("Will NOT execute tasks #{klazz.to_s} objects since its disabled.")
+          next
+        end
+        
         if query_scope.blank?
           Rails.logger.error("Need a query scope for #{klazz.to_s}")
           return

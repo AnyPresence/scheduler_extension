@@ -13,12 +13,14 @@
   %table
     %tbody
       %tr 
+        %th active
         %th name
         %th query_scope
         %th extensions
         %th actions
       - @object_definitions.each do |object|
         %tr
+          %td= object.active || false
           %td= object.name
           %td= object.query_scope
           %td

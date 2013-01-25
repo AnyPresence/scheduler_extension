@@ -2,6 +2,7 @@
   = f.error :base
   = f.error_notification
   = f.input :name, :readonly => true
+  %br
   = f.simple_fields_for :extension_configurations, @extension.extension_configurations do |configuration|
     = configuration.input :value, label: configuration.object.name.titleize
   = f.button :submit

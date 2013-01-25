@@ -1,6 +1,8 @@
 = simple_form_for(@object_definition) do |f|
   = f.error :base
   = f.error_notification
+  = f.input :active, :as => :radio_buttons
+  %br
   = f.input :name, :readonly => true
   = f.input :query_scope
   - if !@available_extensions.blank?

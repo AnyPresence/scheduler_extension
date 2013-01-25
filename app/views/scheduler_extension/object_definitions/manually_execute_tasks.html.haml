@@ -3,5 +3,9 @@
 %br
 %p #{@count || 0} to process for extensions: 
 - @object_definitions.each do |object|
+  - if !object.active
+    %p #{object.name.to_s} is disabled
+  - else
+    %p #{object.name.to_s} is enabled
   - object.extensions.each do |extension|
     %p= extension.name.underscore

@@ -1,4 +1,3 @@
-module SchedulerExtension
-  class ApplicationController < ActionController::Base
-  end
+class SchedulerExtension::ApplicationController < ApplicationController
+  layout 'layouts/admin'
 end

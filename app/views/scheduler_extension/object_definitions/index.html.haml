@@ -22,9 +22,11 @@
           %td= object.active || false
           %td= object.name
           %td= object.query_scope
-          %td
-            -  object.extensions.each do |ext|
-              = link_to ext.name.to_s, edit_object_definition_extension_path(object, ext)
+          %td            
+            -  object.extensions.each_with_index do |ext, idx|
+              = surround(((idx == object.extensions.length-1) ? 'and ' : ' '), ((idx == object.extensions.length-1) ? '' : ',')) do
+                = link_to ext.name.to_s, edit_object_definition_extension_path(object, ext)
+            
           %td
             = link_to "Edit", edit_object_definition_path(object)         
           %td

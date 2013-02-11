@@ -1,20 +1,14 @@
-= simple_form_for(@object_definition, :html => {class: 'form-horizontal'}) do |f|
+= simple_form_for(@object_definition) do |f|
   = f.error :base
   = f.error_notification
-  %table
-    %tr{:class => 'ext'}
-      %td{:colspan => '2'}
-        = f.input :name, :readonly => true
-        = f.input :active, :as => :radio_buttons
-    %tr{:class => 'ext'}
-      %td{:colspan => '2'}
-        = f.input :query_scope
-      - if !@available_extensions.blank?
-        - @available_extensions.each do |ext|
-          %tr{:class => 'ext'}
-            %td{:colspan => '2'}
-              = f.label ext.name
-              = check_box_tag 'object_definition[extensions][][name]', ext.name, @object_definition.extensions.map{|m| m.name}.include?(ext.name)
-    %tr{:class => 'ext'}
-      %td{:colspan => '2'}
-        = f.button :submit
+  = f.input :name, :readonly => true
+  = f.input :active, :as => :radio_buttons
+
+  = f.input :query_scope
+  %br
+  - if !@available_extensions.blank?
+    - @available_extensions.each do |ext|
+      = f.label ext.name
+      = check_box_tag 'object_definition[extensions][][name]', ext.name, @object_definition.extensions.map{|m| m.name}.include?(ext.name)
+  .form-actions     
+    = f.button :submit

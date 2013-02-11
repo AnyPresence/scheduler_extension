@@ -8,7 +8,7 @@
 .container  
   %br
   = link_to "Trigger jobs now", manually_execute_tasks_path, method: :post
-
+  %br
   %table.table.table-striped
     %tbody
       %tr 
@@ -22,10 +22,13 @@
           %td= object.active || false
           %td= object.name
           %td= object.query_scope
-          %td            
-            -  object.extensions.each_with_index do |ext, idx|
-              = surround(((idx == object.extensions.length-1) ? 'and ' : ' '), ((idx == object.extensions.length-1) ? '' : ',')) do
-                = link_to ext.name.to_s, edit_object_definition_extension_path(object, ext)
+          %td 
+            - if object.extensions.count == 1
+              = link_to object.extensions.first.name.to_s, edit_object_definition_extension_path(object, object.extensions.first)
+            - else
+              - object.extensions.each_with_index do |ext, idx|
+                = surround(((idx == object.extensions.length-1) ? 'and ' : ' '), ((idx == object.extensions.length-1) ? '' : ',')) do
+                  = link_to ext.name.to_s, edit_object_definition_extension_path(object, ext)
             
           %td
             = link_to "Edit", edit_object_definition_path(object)         
@@ -36,6 +39,7 @@
   - @available_object_definitions.each do |object|
     - if @object_definitions.has_name(object.to_s).empty?
       = link_to "Add #{object}", new_object_definition_path(name: object)
+      %br
 
 
 

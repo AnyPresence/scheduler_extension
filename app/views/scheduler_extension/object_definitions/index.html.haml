@@ -1,6 +1,6 @@
-
-%h1 Objects
-%h1 Interval #{::AP::SchedulerExtension::Scheduler::Config.instance.configuration[:interval]} seconds
+.text-info
+  %h3 Objects
+  %h3 Interval #{::AP::SchedulerExtension::Scheduler::Config.instance.configuration[:interval]} seconds
 
 - if !flash[:notice].blank?
   .notice
@@ -9,7 +9,7 @@
   %br
   = link_to "Trigger jobs now", manually_execute_tasks_path, method: :post
 
-  %table
+  %table.table.table-striped
     %tbody
       %tr 
         %th active

@@ -1,7 +1,11 @@
-= simple_form_for([@object_definition, @extension]) do |f|
-  = f.error :base
-  = f.error_notification
-  = f.input :name, :readonly => true
-  = f.simple_fields_for :extension_configurations, @extension.extension_configurations do |configuration|
-    = configuration.input :value, label: configuration.object.name.titleize
-  = f.button :submit
+simple_form_for([@object_definition, @extension]) do |f|
+ = f.error :base
+ = f.error_notification
+ %table
+   %tr{:class => 'ext'}
+     %td= f.input :name, :readonly => true
+   = f.simple_fields_for :extension_configurations, @extension.extension_configurations do |configuration|
+     %tr{:class => 'ext'}
+       %td= configuration.input :value, label: configuration.object.name.titleize
+   %tr{:class => 'ext'}
+     %td= f.button :submit

@@ -5,7 +5,6 @@ module SchedulerExtension
     before_filter :get_main_app_models, only: [:index, :update]
     before_filter :get_available_extensions, only: [:edit, :new]
 
-    
     def index
       @object_definitions = ::SchedulerExtension::ObjectDefinition.all
     end
@@ -100,24 +99,24 @@ module SchedulerExtension
       @available_object_definitions = "#{::AP::SchedulerExtension::Scheduler::Config.instance.latest_version.upcase}".constantize.constants
       if @available_object_definitions.blank?
         version = ::AP::SchedulerExtension::Scheduler::Config.instance.latest_version
-        Dir.glob(Rails.root.join("app", "models", version, "*")).each do |f|
+        Dir.glob(Rails.root.join("app", "models", version, "*.rb")).each do |f|
           "::#{version.upcase}::#{File.basename(f, '.*').camelize}".constantize.name 
         end
 
         @available_object_definitions = "#{::AP::SchedulerExtension::Scheduler::Config.instance.latest_version.upcase}".constantize.constants
       end
+      @available_object_definitions.delete(:Custom)
     end
-    
+  
     def get_available_extensions
       @available_extensions = ::AP.constants.map do |m| 
         if (!m.empty? && m != :SchedulerExtension)
           ext = ::SchedulerExtension::Extension.new(name: m.to_s)
+          ext if !ext.json_config.blank? && !ext.json_config["model_configuration"]["object_definition_level_configuration"].blank?
         end 
       end
       @available_extensions = @available_extensions.compact
     end
-    
-
     
   end
 end

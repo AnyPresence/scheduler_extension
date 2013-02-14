@@ -36,11 +36,7 @@ module SchedulerExtension
       object_definition = ::SchedulerExtension::ObjectDefinition.find(params[:object_definition_id])
       @extension = object_definition.extensions.find(params[:id])
       
-      ext_name = @extension.name
-      name = ext_name.slice(0, ext_name.rindex("Extension"))
-      klazz = "::AP::#{ext_name}::#{name}".constantize
-      @extension_json = klazz.send(:json_config) if klazz.respond_to?(:json_config)
-      
+      @extension_json = @extension.json_config
     end
   end
 end

@@ -1,6 +1,16 @@
-.text-info
-  %h3 Update extension
-= link_to "Back to objects", object_definitions_path
-%br
+%ul.breadcrumb
+  %li
+    = link_to 'Home', main_app.admin_root_path
+    %span.divider /
+  %li
+    = link_to 'Extensions', main_app.admin_extensions_path
+    %span.divider /
+  %li
+    = link_to 'Scheduler', object_definitions_path
+    %span.divider /
+  %li.active Update Extension
+
+.page-header
+  %h1 Update Extension
 
 = render partial: 'form'

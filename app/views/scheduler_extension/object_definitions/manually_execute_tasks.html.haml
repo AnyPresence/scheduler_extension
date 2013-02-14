@@ -6,7 +6,7 @@
     = link_to 'Extensions', main_app.admin_extensions_path
     %span.divider /
   %li
-    = link_to 'Scheduler', '/api/scheduler_extension/'
+    = link_to 'Scheduler', object_definitions_path
     %span.divider /
   %li.active Manual Trigger
 
@@ -30,6 +30,7 @@
       - if object.extensions.size > 0
         %ul.nav.nav-list
           - object.extensions.each do |extension|
-            %li.text-muted
+            %li.muted
+              &nbsp;
               %i.icon-cog
-              = extension.name.underscore
+              = extension.name.underscore.humanize

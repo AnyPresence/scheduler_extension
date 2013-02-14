@@ -1,4 +1,4 @@
-= simple_form_for([@object_definition, @extension]) do |f|
+= simple_form_for([@object_definition, @extension], html: {class: 'form-horizontal'}) do |f|
   = f.error :base
   = f.error_notification
   .form-inputs
@@ -6,4 +6,5 @@
     = f.simple_fields_for :extension_configurations, @extension.extension_configurations do |configuration|
       = configuration.input :value, label: configuration.object.name.titleize
   .form-actions
-    = f.button :submit
+    = f.button :submit, class: 'btn-primary'
+    = link_to 'Cancel', object_definitions_path, class: 'btn'

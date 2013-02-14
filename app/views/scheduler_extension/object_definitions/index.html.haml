@@ -44,13 +44,13 @@
             %tr
               %td= object.name
               %td= object.query_scope
-              %td 
-                - if object.extensions.count == 1
-                  = link_to object.extensions.first.name.to_s, edit_object_definition_extension_path(object, object.extensions.first)
-                - else
+              %td
+                - if object.extensions.count > 0
                   - object.extensions.each_with_index do |ext, idx|
-                    = surround(((idx == object.extensions.length-1) ? 'and ' : ' '), ((idx == object.extensions.length-1) ? '' : ',')) do
-                      = link_to ext.name.to_s, edit_object_definition_extension_path(object, ext)
+                    %div
+                      = link_to edit_object_definition_extension_path(object, ext), class: 'text-info' do
+                        %i.icon-cog
+                        = ext.name.to_s.underscore.humanize
               %td.ap-text-center
                 - if object.active
                   %i.icon-ok

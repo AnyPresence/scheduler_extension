@@ -3,15 +3,19 @@
   = f.error_notification
   
   = f.input :name, :readonly => true
-  = f.input :active, :as => :select
   = f.input :query_scope
+  = f.input :active, :as => :boolean
   
   %br
   
   - if !@available_extensions.blank?
-    - @available_extensions.each do |ext|
-      = f.label ext.name
-      = check_box_tag 'object_definition[extensions][][name]', ext.name, @object_definition.extensions.map{|m| m.name}.include?(ext.name)
+    .control-group
+      %label.control-label Extensions
+      .controls
+        - @available_extensions.each do |ext|
+          = label_tag '' do
+            = check_box_tag 'object_definition[extensions][][name]', ext.name, @object_definition.extensions.map{|m| m.name}.include?(ext.name)
+            = ext.name.underscore.humanize
   .form-actions     
     = f.button :submit, class: 'btn-primary'
-    = link_to 'Cancel', '/api/scheduler_extension/', class: 'btn'
+    = link_to 'Cancel', object_definitions_path, class: 'btn'

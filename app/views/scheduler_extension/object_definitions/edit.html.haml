@@ -1,4 +1,16 @@
-.text-info
-  %h3 Edit object
+%ul.breadcrumb
+  %li
+    = link_to 'Home', main_app.admin_root_path
+    %span.divider /
+  %li
+    = link_to 'Extensions', main_app.admin_extensions_path
+    %span.divider /
+  %li
+    = link_to 'Scheduler', '/api/scheduler_extension/'
+    %span.divider /
+  %li.active Edit
+
+.page-header
+  %h1 Edit
 
 = render partial: 'form'

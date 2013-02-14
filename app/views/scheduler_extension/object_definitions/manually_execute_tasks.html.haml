@@ -1,14 +1,35 @@
-.text-info
-  %h3 Result of manual execution
-= link_to "Back to objects", object_definitions_path
+%ul.breadcrumb
+  %li
+    = link_to 'Home', main_app.admin_root_path
+    %span.divider /
+  %li
+    = link_to 'Extensions', main_app.admin_extensions_path
+    %span.divider /
+  %li
+    = link_to 'Scheduler', '/api/scheduler_extension/'
+    %span.divider /
+  %li.active Manual Trigger
 
-.container    
-  %br
-  %p #{@count || 0} to process for extensions: 
-  - @object_definitions.each do |object|
-    - if !object.active
-      %p #{object.name.to_s} is disabled
-    - else
-      %p #{object.name.to_s} is enabled
-    - object.extensions.each do |extension|
-      %p= extension.name.underscore
+.page-header
+  %h1 Manual Trigger
+  %p
+    .badge #{@count || 0}
+    to process for extensions
+
+- if @object_definitions.size > 0
+  %ul.nav.nav-list
+    - @object_definitions.each do |object|
+      - if !object.active
+        %li.text-error
+          %i.icon-remove
+          #{object.name.to_s} is disabled
+      - else
+        %li.text-success
+          %i.icon-ok
+          #{object.name.to_s} is enabled
+      - if object.extensions.size > 0
+        %ul.nav.nav-list
+          - object.extensions.each do |extension|
+            %li.text-muted
+              %i.icon-cog
+              = extension.name.underscore

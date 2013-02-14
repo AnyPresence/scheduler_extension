@@ -1,14 +1,17 @@
-= simple_form_for(@object_definition) do |f|
+= simple_form_for(@object_definition, html: {class: 'form-horizontal'}) do |f|
   = f.error :base
   = f.error_notification
+  
   = f.input :name, :readonly => true
-  = f.input :active, :as => :radio_buttons
-
+  = f.input :active, :as => :select
   = f.input :query_scope
+  
   %br
+  
   - if !@available_extensions.blank?
     - @available_extensions.each do |ext|
       = f.label ext.name
       = check_box_tag 'object_definition[extensions][][name]', ext.name, @object_definition.extensions.map{|m| m.name}.include?(ext.name)
   .form-actions     
-    = f.button :submit
+    = f.button :submit, class: 'btn-primary'
+    = link_to 'Cancel', '/api/scheduler_extension/', class: 'btn'

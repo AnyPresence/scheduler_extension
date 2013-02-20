@@ -112,7 +112,12 @@ module SchedulerExtension
       @available_extensions = ::AP.constants.map do |m| 
         if (!m.empty? && m != :SchedulerExtension)
           ext = ::SchedulerExtension::Extension.new(name: m.to_s)
-          ext if !ext.json_config.blank? && !ext.json_config["model_configuration"]["object_definition_level_configuration"].blank?
+          begin
+            ext if !ext.json_config.blank? && !ext.json_config["model_configuration"]["object_definition_level_configuration"].blank?
+          rescue
+            Rails.logger.error "Unable to use #{ext.name}: #{$!.message}"
+            nil
+          end
         end 
       end
       @available_extensions = @available_extensions.compact

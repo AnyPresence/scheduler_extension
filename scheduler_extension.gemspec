@@ -21,12 +21,13 @@ Gem::Specification.new do |s|
   s.add_dependency "local-env"
   s.add_dependency "resque"
   s.add_dependency "redis"
+  s.add_dependency 'gibberish', '~> 1.2.2'
+  s.add_dependency 'mongoid-encrypted-fields', '~> 1.2.1'
   
   s.add_development_dependency "debugger", "~> 1.5.0"
   s.add_development_dependency "database_cleaner"
   s.add_development_dependency "factory_girl", "= 3.3.0"
   s.add_development_dependency "shoulda"
   s.add_development_dependency "mocha", "~> 0.12.3"
-  # s.add_dependency "jquery-rails"
 
 end

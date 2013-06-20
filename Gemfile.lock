@@ -69,13 +69,12 @@ GEM
     compass-rails (1.0.3)
       compass (>= 0.12.2, < 0.14)
     database_cleaner (0.9.1)
-    debugger (1.2.2)
+    debugger (1.5.0)
       columnize (>= 0.3.1)
-      debugger-linecache (~> 1.1.1)
-      debugger-ruby_core_source (~> 1.1.5)
-    debugger-linecache (1.1.2)
-      debugger-ruby_core_source (>= 1.1.1)
-    debugger-ruby_core_source (1.1.5)
+      debugger-linecache (~> 1.2.0)
+      debugger-ruby_core_source (~> 1.2.0)
+    debugger-linecache (1.2.0)
+    debugger-ruby_core_source (1.2.2)
     erubis (2.7.0)
     execjs (1.4.0)
       multi_json (~> 1.0)
@@ -107,6 +106,7 @@ GEM
       treetop (~> 1.4.8)
     metaclass (0.0.1)
     mime-types (1.19)
+    minitest (3.5.0)
     mocha (0.12.7)
       metaclass (~> 0.0.1)
     mongoid (3.0.9)
@@ -198,11 +198,12 @@ DEPENDENCIES
   coffee-rails (~> 3.2.1)
   compass-rails (= 1.0.3)
   database_cleaner
-  debugger
+  debugger (~> 1.5.0)
   factory_girl (= 3.3.0)
   haml (= 3.1.7)
   jquery-rails
   jquery_mobile_rails (= 1.2.0)
+  minitest (= 3.5.0)
   mocha (~> 0.12.3)
   mongoid (~> 3.0.6)
   push_notification_extension (= 0.0.1)!
@@ -210,7 +211,7 @@ DEPENDENCIES
   resque
   sass-rails (= 3.2.5)
   scheduler_extension!
-  shoulda
+  shoulda (~> 3.3.2)
   simple_form (= 2.0.4)
   therubyracer
   uglifier

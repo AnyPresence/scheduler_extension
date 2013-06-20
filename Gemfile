@@ -29,4 +29,7 @@ end
 # your gem to rubygems.org.
 
 # To use debugger
-gem 'debugger'
+gem 'debugger', '~> 1.5.0'
+gem 'mocha', "~> 0.12.3", :require => false
+gem 'shoulda', '~> 3.3.2'
+gem 'minitest', '3.5.0'

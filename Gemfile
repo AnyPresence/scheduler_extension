@@ -33,3 +33,7 @@ gem 'debugger', '~> 1.5.0'
 gem 'mocha', "~> 0.12.3", :require => false
 gem 'shoulda', '~> 3.3.2'
 gem 'minitest', '3.5.0'
+
+gem 'gibberish', '~> 1.2.2'
+gem 'mongoid-encrypted-fields', '~> 1.2.1'
+

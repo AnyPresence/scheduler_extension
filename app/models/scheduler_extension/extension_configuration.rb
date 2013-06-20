@@ -6,6 +6,6 @@ module SchedulerExtension
     belongs_to :extension
     
     field :name, type: String
-    field :value, type: String
+    field :value, type: Mongoid::EncryptedString
   end
 end

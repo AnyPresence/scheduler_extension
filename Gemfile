@@ -7,7 +7,7 @@ gemspec
 
 # jquery-rails is used by the dummy application
 gem "jquery-rails"
-gem 'mongoid', '~> 3.0.6'
+gem 'mongoid', "~> 3.1"
 gem "resque"
 gem "redis"
 gem 'haml', '3.1.7'
@@ -16,7 +16,8 @@ gem 'jquery_mobile_rails', '1.2.0'
 gem 'simple_form', '2.0.4'
 gem 'sass-rails', '3.2.5'
 gem 'compass-rails', '1.0.3'
-gem 'push_notification_extension', '0.0.1', :git => 'git://github.com/AnyPresence/push_notification_extension.git', :tag => "v0.0.1"
+gem 'kaminari', '~> 0.14.1'
+gem 'push_notification_extension', :git => 'git://github.com/AnyPresence/push_notification_extension.git', :tag => "v0.0.9"
 
 group :assets do
   gem 'therubyracer'

@@ -17,7 +17,7 @@ Gem::Specification.new do |s|
   s.test_files = Dir["test/**/*"]
 
   s.add_dependency "rails", "~> 3.2.9"
-  s.add_dependency "mongoid", "~> 3.0.6"
+  s.add_dependency "mongoid", "~> 3.1"
   s.add_dependency "local-env"
   s.add_dependency "resque"
   s.add_dependency "redis"

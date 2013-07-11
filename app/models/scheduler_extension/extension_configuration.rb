@@ -1,3 +1,5 @@
+require "ap/scheduler_extension/gibberish_cipher"
+
 module SchedulerExtension
   class ExtensionConfiguration
     include ActiveModel::MassAssignmentSecurity

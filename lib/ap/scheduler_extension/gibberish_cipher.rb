@@ -28,10 +28,7 @@ class AP::SchedulerExtension::Scheduler::GibberishCipher
 end
 
 key = (!Rails.env.test?) ? ENV['ENCRYPTION_PASSWORD'] : "test"
-if !Rails.env.test?
-  raise "A key is needed. Please set the env variable ENCRYPTION_PASSWORD" if key.blank?
-else
-  key = "fake_key_for_testing"
-end
+
+raise "A key is needed. Please set the env variable ENCRYPTION_PASSWORD" if key.blank?
 
 Mongoid::EncryptedFields.cipher = AP::SchedulerExtension::Scheduler::GibberishCipher.new(key)

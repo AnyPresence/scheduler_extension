@@ -8,6 +8,8 @@ require 'shoulda'
 require 'mocha'
 require 'database_cleaner'
 
+Resque.inline = true
+
 Rails.backtrace_cleaner.remove_silencers!
 
 Dir.glob(File.dirname(__FILE__) + "/factories/*").each do |factory|

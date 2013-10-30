@@ -6,5 +6,5 @@
     = f.simple_fields_for :extension_configurations, @extension.extension_configurations do |configuration|
       = configuration.input :value, label: configuration.object.name.titleize
   .form-actions
-    = f.button :submit, class: 'btn-primary'
-    = link_to 'Cancel', object_definitions_path, class: 'btn'
+    = f.button :submit, class: 'btn btn-primary'
+    = link_to 'Cancel', object_definitions_path, class: 'btn btn-link'

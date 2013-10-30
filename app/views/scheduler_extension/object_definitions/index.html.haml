@@ -1,13 +1,13 @@
 %ul.breadcrumb
   %li
     = link_to 'Home', main_app.admin_root_path
-    %span.divider /
+    
   %li
     = link_to 'Extensions', main_app.admin_extensions_path
-    %span.divider /
+    
   %li.active Scheduler
 
-.alert.alert-info
+.page-header
   %h1 Scheduler
   %p Manage scheduler settings.
   - interval = ::AP::SchedulerExtension::Scheduler::Config.instance.configuration[:interval]
@@ -20,12 +20,11 @@
 
 
 - if @object_definitions.size > 0
-  %hr
-  = link_to "Trigger jobs now", manually_execute_tasks_path, method: :post, class: 'btn btn-primary btn-large'
+  = link_to "Trigger jobs now", manually_execute_tasks_path, method: :post, class: 'btn btn-primary btn-lg'
   %hr
 
-.row-fluid
-  .span8
+.row
+  .col-md-8
     - if @object_definitions.size == 0
       .alert
         %strong No jobs yet.
@@ -55,17 +54,18 @@
                   %i.icon-ok
               %td
                 .btn-group.pull-right
-                  = link_to edit_object_definition_path(object), class: 'btn btn-mini' do
+                  = link_to edit_object_definition_path(object), class: 'btn btn-xs' do
                     %i.icon-edit
                     Edit
-                  = link_to object, method: :delete, class: 'btn btn-mini', data: {confirm: 'Are you sure?'} do
+                  = link_to object, method: :delete, class: 'btn btn-xs', data: {confirm: 'Are you sure?'} do
                     %i.icon-remove
                     Delete
-  .span4
+  .col-md-4
     - if @available_object_definitions.size > 0
       .well{style: 'padding: 8px 0;'}
         %ul.nav.nav-list
-          %li.nav-header Add an Object Definition
+          %li.disabled
+            %a Add an Object Definition
           - @available_object_definitions.each do |object|
             - if @object_definitions.has_name(object.to_s).empty?
               %li

@@ -9,13 +9,15 @@
   %br
   
   - if !@available_extensions.blank?
-    .control-group
-      %label.control-label Extensions
-      .controls
+    .form-group
+      .col-md-3
+        %label Extensions
+      .col-md-9
         - @available_extensions.each do |ext|
           = label_tag '' do
             = check_box_tag 'object_definition[extensions][][name]', ext.name, @object_definition.extensions.map{|m| m.name}.include?(ext.name)
             = ext.name.underscore.humanize
+          %br
   .form-actions     
-    = f.button :submit, class: 'btn-primary'
-    = link_to 'Cancel', object_definitions_path, class: 'btn'
+    = f.button :submit, class: 'btn btn-primary'
+    = link_to 'Cancel', object_definitions_path, class: 'btn btn-link'

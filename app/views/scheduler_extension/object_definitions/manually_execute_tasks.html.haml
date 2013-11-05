@@ -21,16 +21,16 @@
     - @object_definitions.each do |object|
       - if !object.active
         %li.text-error
-          %i.icon-remove
+          %i.fa.fa-times
           #{object.name.to_s} is disabled
       - else
         %li.text-success
-          %i.icon-ok
+          %i.fa.fa-check
           #{object.name.to_s} is enabled
       - if object.extensions.size > 0
         %ul.nav.nav-list
           - object.extensions.each do |extension|
             %li.muted
               &nbsp;
-              %i.icon-cog
+              %i.fa.fa-cog
               = extension.name.underscore.humanize

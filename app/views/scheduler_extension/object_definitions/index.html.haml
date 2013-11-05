@@ -47,18 +47,18 @@
                   - object.extensions.each_with_index do |ext, idx|
                     %div
                       = link_to edit_object_definition_extension_path(object, ext), class: 'text-info' do
-                        %i.icon-cog
+                        %i.fa.fa-cog
                         = ext.name.to_s.underscore.humanize
               %td.ap-text-center
                 - if object.active
-                  %i.icon-ok
+                  %i.fa.fa-check
               %td
                 .btn-group.pull-right
-                  = link_to edit_object_definition_path(object), class: 'btn btn-xs' do
-                    %i.icon-edit
+                  = link_to edit_object_definition_path(object), class: 'btn btn-default btn-xs' do
+                    %i.fa.fa-pencil
                     Edit
-                  = link_to object, method: :delete, class: 'btn btn-xs', data: {confirm: 'Are you sure?'} do
-                    %i.icon-remove
+                  = link_to object, method: :delete, class: 'btn btn-default btn-xs', data: {confirm: 'Are you sure?'} do
+                    %i.fa.fa-trash-o
                     Delete
   .col-md-4
     - if @available_object_definitions.size > 0
@@ -70,7 +70,7 @@
             - if @object_definitions.has_name(object.to_s).empty?
               %li
                 = link_to new_object_definition_path(name: object) do
-                  %i.icon-th
+                  %i.fa.fa-th
                   = object
                   %span.pull-right
-                    %i.icon-chevron-right
+                    %i.fa.fa-chevron-right

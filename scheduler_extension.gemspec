@@ -27,7 +27,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency "debugger", "~> 1.5.0"
   s.add_development_dependency "database_cleaner"
   s.add_development_dependency "factory_girl", "= 3.3.0"
-  s.add_development_dependency "shoulda"
-  s.add_development_dependency "mocha", "~> 0.12.3"
+  s.add_development_dependency "shoulda", '~> 3.3.2'
+  s.add_development_dependency "mocha", "~> 0.13.3"
 
 end

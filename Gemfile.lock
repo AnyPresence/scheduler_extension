@@ -16,7 +16,7 @@ GIT
 PATH
   remote: .
   specs:
-    scheduler_extension (0.0.8)
+    scheduler_extension (0.0.9)
       gibberish (~> 1.2.2)
       local-env
       mongoid (~> 3.1)
